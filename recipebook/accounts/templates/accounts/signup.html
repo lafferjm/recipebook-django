@@ -1,20 +1,24 @@
-<h2>Sign Up</h2>
-<form method="post">
-    {% csrf_token %}
+{% extends "base.html" %}
 
-    <p>{{ form.username.label_tag }} {{ form.username }}</p>
-    {% if form.username.errors %}
-        {{ form.username.errors }}
-    {% endif %}
+{% block content %}
+    <h2>Sign Up</h2>
+    <form method="post">
+        {% csrf_token %}
 
-    <p>{{ form.password1.label_tag }} {{ form.password1 }}</p>
-    {% if form.password1.errors %}
-        {{ form.password1.errors }}
-    {% endif %}
+        <p>{{ form.username.label_tag }} {{ form.username }}</p>
+        {% if form.username.errors %}
+            {{ form.username.errors }}
+        {% endif %}
 
-    <p>{{ form.password2.label_tag }} {{ form.password2 }}</p>
-    {% if form.password2.errors %}
-        {{ form.password2.errors }}
-    {% endif %}
-    <button type="submit">Sign Up</button>
-</form>
+        <p>{{ form.password1.label_tag }} {{ form.password1 }}</p>
+        {% if form.password1.errors %}
+            {{ form.password1.errors }}
+        {% endif %}
+
+        <p>{{ form.password2.label_tag }} {{ form.password2 }}</p>
+        {% if form.password2.errors %}
+            {{ form.password2.errors }}
+        {% endif %}
+        <button type="submit">Sign Up</button>
+    </form>
+{% endblock %}
