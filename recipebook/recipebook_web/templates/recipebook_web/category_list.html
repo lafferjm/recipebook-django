@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if not category_list %}
+        <p>You do not have any recipe categories, lets add some</p>
+    {% else %}
+        <ul class="list-group">
+            {% for category in category_list %}
+                <li class="list-group-item">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="{{ category.get_collapse_target }}">
+                        {{ category.name }}
+                    </button>
+                </li>
+                {% if category.subcategories %}
+                    <div id="{{ category.get_collapse_target }}" class="collapse">
+                        <ul class="list-group">
+                            {% for subcategory in category.subcategories.all %}
+                                <li class="list-group-item offset-1">
+                                    {{ subcategory.name }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

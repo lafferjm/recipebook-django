@@ -13,6 +13,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_collapse_target(self):
+        return f"# + {self.id}"
+
 
 class Recipe(models.Model):
     name = models.CharField(max_length=30)
