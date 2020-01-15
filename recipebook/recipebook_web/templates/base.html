@@ -1,0 +1,44 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        {% load static %}
+
+        <title>Recipe Book</title>
+    </head>
+    <body>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="{% url 'index' %}" class="brand-logo left">RecipeBook</a>
+                <ul id="nav-mobile" class="right">
+                    <li>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                        <a href="{% url 'login' %}">Login</a>
+                    {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col s12 m4 l3">
+                <!-- Grey navigation panel -->
+            </div>
+
+            <div class="col s12 m8 l9">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
+        </script>
+    </body>
+</html>
