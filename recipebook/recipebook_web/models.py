@@ -14,7 +14,7 @@ class Category(models.Model):
         return self.name
 
     def get_collapse_target(self):
-        return f"# + {self.id}"
+        return f"#categoryId{self.id}"
 
 
 class Recipe(models.Model):
