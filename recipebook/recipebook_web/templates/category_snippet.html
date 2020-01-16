@@ -1,0 +1,22 @@
+<style>
+    .category-list {
+        padding: 0 2rem !important;
+    }
+</style>
+
+{% if not categories %}
+    <p>There are no categories</p>
+{% else %}
+    <ul class="collapsible">
+        {% for category in categories %}
+            <li>
+                <div class="collapsible-header">{{ category.name }}</div>
+                    {% for subcategory in category.subcategories.all %}
+                        <div class="collapsible-body category-list">
+                        <p>{{ subcategory.name }}</p>
+                    </div>
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

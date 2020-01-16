@@ -11,12 +11,6 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         {% load static %}
 
-        <style>
-            .category-list {
-                padding: 0 2rem !important;
-            }
-        </style>
-
         <title>Recipe Book</title>
     </head>
 
@@ -38,22 +32,7 @@
 
         <div class="row">
             <div class="col s3">
-                {% if not categories %}
-                    <p>There are no categories</p>
-                {% else %}
-                    <ul class="collapsible">
-                        {% for category in categories %}
-                            <li>
-                                <div class="collapsible-header">{{ category.name }}</div>
-                                {% for subcategory in category.subcategories.all %}
-                                    <div class="collapsible-body category-list">
-                                        <p>{{ subcategory.name }}</p>
-                                    </div>
-                                {% endfor %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+                {% include "category_snippet.html" %}
             </div>
 
             <div class="col s9">
