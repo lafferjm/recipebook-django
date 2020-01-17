@@ -2,8 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from .models import Category, Recipe
+from .forms import CategoryForm
 
 
 class RecipeListView(LoginRequiredMixin, ListView):
@@ -16,6 +18,16 @@ class RecipeListView(LoginRequiredMixin, ListView):
 class RecipeDetailView(LoginRequiredMixin, DetailView):
     model = Recipe
     context_object_name = "recipe"
+
+
+class CategoryCreateView(LoginRequiredMixin, CreateView):
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+    form_class = CategoryForm
+    model = Category
 
 
 @login_required
