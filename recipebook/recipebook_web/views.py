@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
@@ -21,13 +22,22 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
 
 
 class CategoryCreateView(LoginRequiredMixin, CreateView):
+    form_class = CategoryForm
+    model = Category
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
 
-    form_class = CategoryForm
-    model = Category
+    def form_valid(self, form):
+        category = form.save(commit=False)
+        category.owner = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('index')
+
 
 
 @login_required

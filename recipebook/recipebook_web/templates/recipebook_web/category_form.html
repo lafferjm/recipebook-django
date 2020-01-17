@@ -3,8 +3,31 @@
 {% block content %}
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save">
+
+        {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}
+        
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="id_name" type="text" name="name" />
+                <label for="id_name">{{ form.name.label }}</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <select>
+                    {% for value, name in form.subcategory.field.choices %}
+                        <option value="{{value}}">{{ name }}</option>
+                    {% endfor %}
+                </select>
+                <label for="id_subcategory">{{ form.subcategory.label }}</label>
+            </div>
+        </div>
+
+        <button class="btn waves-effect waves-light" type="submit">
+            Submit
+        </button>
     </form>
 
     <script>
