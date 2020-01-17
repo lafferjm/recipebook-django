@@ -4,7 +4,9 @@
     }
 </style>
 
-{% if not categories %}
+{% if not request.user.is_authenticated %}
+    <div></div>
+{% elif not categories %}
     <p>There are no categories</p>
 {% else %}
     <ul class="collapsible">
