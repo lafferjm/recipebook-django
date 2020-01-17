@@ -10,11 +10,19 @@
     <ul class="collapsible">
         {% for category in categories %}
             <li>
-                <div class="collapsible-header">{{ category.name }}</div>
+                <div class="collapsible-header">
+                    {% if category.subcategories.all %}
+                        {{ category.name }}
+                    {% else %}
+                        <a href="{% url 'recipes' category=category.name %}">{{ category.name }}</a>    
+                    {% endif %}
+                </div>
                     {% for subcategory in category.subcategories.all %}
                         <div class="collapsible-body category-list">
-                        <p>{{ subcategory.name }}</p>
-                    </div>
+                            <p>
+                                <a href="{% url 'recipes' category=subcategory.name %}">{{ subcategory.name }}</a>
+                            </p>
+                        </div>
                 {% endfor %}
             </li>
         {% endfor %}
