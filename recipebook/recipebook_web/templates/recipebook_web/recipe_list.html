@@ -1,6 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>This is some recipes stuff</h2>
-    {{ recipe_list }}
+    <h2>{{ request.resolver_match.kwargs.category }} Recipes</h2>
+    <table class="highlight">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Found</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in recipe_list %}
+                <tr>
+                    <td>{{ recipe.name }}</td>
+                    <td>{{ recipe.found }}</td>
+                    <td>View</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
