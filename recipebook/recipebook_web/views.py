@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from .models import Recipe
+from .models import Category, Recipe
 
 
 class RecipeListView(LoginRequiredMixin, ListView):
@@ -17,5 +18,11 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "recipe"
 
 
+@login_required
 def index(request):
-    return render(request, 'recipebook_web/index.html')
+    category_count = Category.objects.filter(owner=request.user).count()
+    recipe_count = Recipe.objects.filter(owner=request.user).count()
+
+    return render(request, 'recipebook_web/index.html', {
+        "category_count": category_count, 
+        "recipe_count": recipe_count})

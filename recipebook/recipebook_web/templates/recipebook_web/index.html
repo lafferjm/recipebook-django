@@ -1,5 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>This is the main page</h2>
+    <h2>Welcome to your Recipe Book</h2>
+    <hr />
+    <p>Below are simple stats regarding your recipe book, and actions you can take from there.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Statistic</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Count of Categories</td>
+                <td>{{ category_count }}</td>
+            </tr>
+            <tr>
+                <td>Count of Recipes</td>
+                <td>{{ recipe_count }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col s12">
+            <a class="waves-effect waves-light btn">Add A Category</a>
+            <a class="waves-effect waves-light btn">Add A Recipe</a>
+        </div>
+    </div>
 {% endblock %}
