@@ -6,7 +6,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from .models import Category, Recipe
-from .forms import CategoryForm
+from .forms import CategoryForm, RecipeForm
 
 
 class RecipeListView(LoginRequiredMixin, ListView):
@@ -38,6 +38,23 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('index')
 
+
+class RecipeCreateView(LoginRequiredMixin, CreateView):
+    form_class = RecipeForm
+    model = Recipe
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+    
+    def form_valid(self, form):
+        recipe = form.save(commit=False)
+        recipe.owner = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('index')
 
 
 @login_required

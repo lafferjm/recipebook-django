@@ -1,5 +1,5 @@
 from django import forms
-from .models import Category
+from .models import Category, Recipe
 
 
 class CategoryForm(forms.ModelForm):
@@ -14,3 +14,17 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['name', 'subcategory']
+
+
+class RecipeForm(forms.ModelForm):
+    category = forms.ModelChoiceField(queryset=None)
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        super().__init__(*args, **kwargs)
+
+        self.fields['category'].queryset = Category.objects.filter(owner=self.request.user)
+
+    class Meta:
+        model = Recipe
+        fields = ['name', 'recipe', 'ingredients', 'found', 'category']
