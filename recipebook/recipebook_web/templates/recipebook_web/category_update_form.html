@@ -34,22 +34,5 @@
         </button>
     </form>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems, {});
-        });
-    </script>
+    {% include "dropdown_snippet.html" %}
 {% endblock %}
-
-
-<div class="row">
-    <div class="input-field col s12">
-        <select id="id_subcategory">
-            {% for value, name in form.subcategory.field.choices %}
-                <option value="{{value}}">{{ name }}</option>
-            {% endfor %}
-        </select>
-        <label for="id_subcategory">{{ form.subcategory.label }}</label>
-    </div>
-</div>
