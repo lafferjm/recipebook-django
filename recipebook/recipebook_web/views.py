@@ -45,6 +45,9 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     template_name_suffix = '_update_form'
     fields = ['name', 'found', 'recipe', 'ingredients', 'category']
 
+    def get_success_url(self):
+        return reverse('recipe-detail', kwargs={'pk': self.object.id})
+
 
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     form_class = CategoryForm
