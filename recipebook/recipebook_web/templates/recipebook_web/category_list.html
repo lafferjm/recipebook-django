@@ -14,7 +14,7 @@
                 <tr>
                     <td>{{ category.name }}</td>
                     <td>{{ category.subcategory }}</td>
-                    <td>Edit Delete</td>
+                    <td><a href="{% url 'category-update' pk=category.id %}">Edit</a> Delete</td>
                 </tr>
             {% endfor %}
         </tbody>

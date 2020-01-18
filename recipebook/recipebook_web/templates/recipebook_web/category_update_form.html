@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            <div class="row">
+                <div class="col s12" style="color: red;">
+                    {{ form.errors }}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="id_name" type="text" name="name" value="{{ form.name.value }}" />
+                <label for="id_name">{{ form.name.label }}</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form.subcategory }}
+                <label for="id_subcategory">{{ form.subcategory.label }}</label>
+            </div>
+        </div>
+
+        <button class="btn waves-effect waves-light" type="submit">
+            Update
+        </button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems, {});
+        });
+    </script>
+{% endblock %}
+
+
+<div class="row">
+    <div class="input-field col s12">
+        <select id="id_subcategory">
+            {% for value, name in form.subcategory.field.choices %}
+                <option value="{{value}}">{{ name }}</option>
+            {% endfor %}
+        </select>
+        <label for="id_subcategory">{{ form.subcategory.label }}</label>
+    </div>
+</div>

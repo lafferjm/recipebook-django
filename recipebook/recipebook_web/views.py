@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
 from .models import Category, Recipe
 from .forms import CategoryForm, RecipeForm
@@ -42,6 +42,7 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     form_class = CategoryForm
     model = Category
+    template_name_suffix = "_create_form"
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -63,6 +64,15 @@ class CategoryListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Category.objects.filter(owner=self.request.user)
+
+
+class CategoryUpdateView(LoginRequiredMixin, UpdateView):
+    model = Category
+    fields = ['name', 'subcategory']
+    template_name_suffix = "_update_form"
+
+    def get_success_url(self):
+        return reverse('category-list')
 
 
 @login_required
