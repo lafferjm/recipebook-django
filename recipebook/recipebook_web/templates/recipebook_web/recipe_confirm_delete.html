@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Deleting {{ object.name }}</h2>
+    {% if request.user.is_authenticated and request.user == object.owner %}
+        <h2>Deleting {{ object.name }}</h2>
 
-    <form method="post">
-        {% csrf_token %}
-        
-        <p>Are you sure you want to delete the recipe - <b>{{ object.name }}</b>?</p>
-        <button class="btn waves-effect waves-light">Confirm</button>
-    </form>
+        <form method="post">
+            {% csrf_token %}
+            
+            <p>Are you sure you want to delete the recipe - <b>{{ object.name }}</b>?</p>
+            <button class="btn waves-effect waves-light">Confirm</button>
+        </form>
+    {% else %}
+        <p>You do not have permissions to delete this recipe.</p>
+    {% endif %}
 {% endblock %}

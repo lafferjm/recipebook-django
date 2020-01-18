@@ -1,15 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>{{ recipe.name }}</h2>
-    <p>Found - {{ recipe.found }}</p>
-    <hr />
+    {% if request.user.is_authenticated and request.user == recipe.owner %}
+        <h2>{{ recipe.name }}</h2>
+        <p>Found - {{ recipe.found }}</p>
+        <hr />
 
-    <h3>Ingredients</h3>
-    <p>{{ recipe.ingredients }}</p>
-    <h3>Recipe</h3>
-    <p>{{ recipe.recipe }}</p>
+        <h3>Ingredients</h3>
+        <p>{{ recipe.ingredients }}</p>
+        <h3>Recipe</h3>
+        <p>{{ recipe.recipe }}</p>
 
-    <a class="btn waves-effect waves-light" href="{% url 'recipe-update' pk=recipe.id %}">Edit</a>
-    <a class="btn waves-effect waves-light" href="{% url 'recipe-delete' pk=recipe.id %}">Delete</a>
+        <a class="btn waves-effect waves-light" href="{% url 'recipe-update' pk=recipe.id %}">Edit</a>
+        <a class="btn waves-effect waves-light" href="{% url 'recipe-delete' pk=recipe.id %}">Delete</a>
+    {% else %}
+        <p>You do not have permissions to view this recipe!</p>
+    {% endif %}
 {% endblock %}

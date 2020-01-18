@@ -1,55 +1,59 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Editing {{ recipe.name }}</h2>
-    <form method="post">
-        {% csrf_token %}
+    {% if request.user.is_authenticated and request.user == recipe.owner %}
+        <h2>Editing {{ recipe.name }}</h2>
+        <form method="post">
+            {% csrf_token %}
 
-        {% if form.errors %}
+            {% if form.errors %}
+                <div class="row">
+                    <div class="col s12" style="color: red;">
+                        {{ form.errors }}
+                    </div>
+                </div>
+            {% endif %}
+
             <div class="row">
-                <div class="col s12" style="color: red;">
-                    {{ form.errors }}
+                <div class="input-field col s12">
+                    <input id="id_name" type="text" name="name" value="{{ form.name.value }}" />
+                    <label for="id_name">{{ form.name.label }}</label>
                 </div>
             </div>
-        {% endif %}
 
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="id_name" type="text" name="name" value="{{ form.name.value }}" />
-                <label for="id_name">{{ form.name.label }}</label>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="id_found" type="text" name="found" value="{{ form.found.value }}" />
+                    <label for="id_found">{{ form.found.label }}</label>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="id_found" type="text" name="found" value="{{ form.found.value }}" />
-                <label for="id_found">{{ form.found.label }}</label>
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form.category }}
+                    <label for="id_category">{{ form.category.label }}</label>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="input-field col s12">
-                {{ form.category }}
-                <label for="id_category">{{ form.category.label }}</label>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="id_ingredients" class="materialize-textarea" name="ingredients">{{ form.ingredients.value }}</textarea>
+                    <label for="id_ingredients">{{ form.ingredients.label }}</label>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="input-field col s12">
-                <textarea id="id_ingredients" class="materialize-textarea" name="ingredients">{{ form.ingredients.value }}</textarea>
-                <label for="id_ingredients">{{ form.ingredients.label }}</label>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="id_recipe" class="materialize-textarea" name="recipe">{{ form.recipe.value }}</textarea>"
+                    <label for="id_recipe">{{ form.recipe.label }}</label>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="input-field col s12">
-                <textarea id="id_recipe" class="materialize-textarea" name="recipe">{{ form.recipe.value }}</textarea>"
-                <label for="id_recipe">{{ form.recipe.label }}</label>
-            </div>
-        </div>
+            <button class="btn waves-effect waves-light" type="submit">Update</button>
+        </form>
 
-        <button class="btn waves-effect waves-light" type="submit">Update</button>
-    </form>
-
-    {% include "dropdown_snippet.html" %}
+        {% include "dropdown_snippet.html" %}
+    {% else %}
+        <p>You do not have permissions to edit this recipe.</p>
+    {% endif %}
 {% endblock %}
