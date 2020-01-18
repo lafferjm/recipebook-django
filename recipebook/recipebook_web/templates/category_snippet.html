@@ -13,11 +13,7 @@
         {% for category in categories %}
             <li>
                 <div class="collapsible-header">
-                    {% if category.subcategories.all %}
-                        {{ category.name }}
-                    {% else %}
-                        <a href="{% url 'recipes' category=category.name %}">{{ category.name }}</a>    
-                    {% endif %}
+                    <a href="{% url 'recipes' category=category.name %}">{{ category.name }}</a>    
                 </div>
                     {% for subcategory in category.subcategories.all %}
                         <div class="collapsible-body category-list">
