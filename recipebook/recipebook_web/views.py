@@ -24,6 +24,7 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
 class RecipeCreateView(LoginRequiredMixin, CreateView):
     form_class = RecipeForm
     model = Recipe
+    template_name_suffix = "_create_form"
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
