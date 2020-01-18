@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView 
 from django.views.generic.list import ListView
 from .models import Category, Recipe
 from .forms import CategoryForm, RecipeForm
@@ -71,6 +71,13 @@ class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Category
     fields = ['name', 'subcategory']
     template_name_suffix = "_update_form"
+
+    def get_success_url(self):
+        return reverse('category-list')
+
+
+class CategoryDeleteView(LoginRequiredMixin, DeleteView):
+    model = Category
 
     def get_success_url(self):
         return reverse('category-list')
