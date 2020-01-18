@@ -40,6 +40,12 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
         return reverse('index')
 
 
+class RecipeUpdateView(LoginRequiredMixin, UpdateView):
+    model = Recipe
+    template_name_suffix = '_update_form'
+    fields = ['name', 'found', 'recipe', 'ingredients', 'category']
+
+
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     form_class = CategoryForm
     model = Category
