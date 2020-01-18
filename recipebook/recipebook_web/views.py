@@ -21,6 +21,24 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
     context_object_name = "recipe"
 
 
+class RecipeCreateView(LoginRequiredMixin, CreateView):
+    form_class = RecipeForm
+    model = Recipe
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+    
+    def form_valid(self, form):
+        recipe = form.save(commit=False)
+        recipe.owner = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('index')
+
+
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     form_class = CategoryForm
     model = Category
@@ -39,22 +57,12 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
         return reverse('index')
 
 
-class RecipeCreateView(LoginRequiredMixin, CreateView):
-    form_class = RecipeForm
-    model = Recipe
+class CategoryListView(LoginRequiredMixin, ListView):
+    model = Category
+    context_object_name = "category_list"
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['request'] = self.request
-        return kwargs
-    
-    def form_valid(self, form):
-        recipe = form.save(commit=False)
-        recipe.owner = self.request.user
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse('index')
+    def get_queryset(self):
+        return Category.objects.filter(owner=self.request.user)
 
 
 @login_required
