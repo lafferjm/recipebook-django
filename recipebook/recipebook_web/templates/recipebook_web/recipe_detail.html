@@ -11,4 +11,5 @@
     <p>{{ recipe.recipe }}</p>
 
     <a class="btn waves-effect waves-light" href="{% url 'recipe-update' pk=recipe.id %}">Edit</a>
+    <a class="btn waves-effect waves-light" href="{% url 'recipe-delete' pk=recipe.id %}">Delete</a>
 {% endblock %}

@@ -49,6 +49,13 @@ class RecipeUpdateView(LoginRequiredMixin, UpdateView):
         return reverse('recipe-detail', kwargs={'pk': self.object.id})
 
 
+class RecipeDeleteView(LoginRequiredMixin, DeleteView):
+    model = Recipe
+
+    def get_success_url(self):
+        return reverse('index')
+
+
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     form_class = CategoryForm
     model = Category

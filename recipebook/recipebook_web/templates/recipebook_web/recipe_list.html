@@ -18,6 +18,7 @@
                     <td>{{ recipe.found }}</td>
                     <td>
                         <a href="{% url 'recipe-detail' recipe.id %}">View</a>
+                        <a href="{% url 'recipe-delete' recipe.id %}">Delete</a>
                     </td>
                 </tr>
             {% endfor %}
