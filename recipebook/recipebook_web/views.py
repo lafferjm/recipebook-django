@@ -42,8 +42,14 @@ class RecipeCreateView(LoginRequiredMixin, CreateView):
 
 class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipe
+    form_class = RecipeForm
     template_name_suffix = '_update_form'
-    fields = ['name', 'found', 'recipe', 'ingredients', 'category']
+    #fields = ['name', 'found', 'recipe', 'ingredients', 'category']
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
     def get_success_url(self):
         return reverse('recipe-detail', kwargs={'pk': self.object.id})
@@ -85,8 +91,14 @@ class CategoryListView(LoginRequiredMixin, ListView):
 
 class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Category
-    fields = ['name', 'subcategory']
+    form_class = CategoryForm
+    #fields = ['name', 'subcategory']
     template_name_suffix = "_update_form"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
     def get_success_url(self):
         return reverse('category-list')
